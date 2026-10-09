@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oman Grade 7 English Adventure - Present Continuous for Future</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0284c7, #4f46e5);
+            min-height: 100vh;
+        }
+        .draggable {
+            cursor: grab;
+            user-select: none;
+        }
+        .draggable:active {
+            cursor: grabbing;
+        }
+        .dropzone {
+            transition: all 0.3s ease;
+        }
+        .dropzone.drag-over {
+            background-color: rgba(56, 189, 248, 0.25);
+            border-color: #0284c7;
+            transform: scale(1.02);
+        }
+        @keyframes bounce-slow {
+            0%, 100% { transform: translateY(-5%); }
+            50% { transform: translateY(0); }
+        }
+        .animate-bounce-slow {
+            animation: bounce-slow 3s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="text-slate-800 flex flex-col min-h-screen">
+
+    <header class="bg-white/95 backdrop-blur-md shadow-lg sticky top-0 z-50 px-4 py-3 border-b border-indigo-100">
+        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-3">
+            <div class="flex items-center gap-3">
+                <div class="bg-indigo-600 text-white p-2.5 rounded-2xl shadow-md">
+                    <i class="fa-solid fa-gamepad text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-base sm:text-lg text-indigo-900 leading-tight">Oman Grade 7 English Quest</h1>
+                    <p class="text-xs text-slate-500">Unit 5: Entertainment Places & Future Plans</p>
+                </div>
+            </div>
+
+            <!-- Stage Selector Buttons -->
+            <div class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-2xl shadow-inner">
+                <button onclick="switchStage('warmup')" id="btn-warmup" class="px-3 py-1.5 text-xs font-semibold rounded-xl transition-all bg-indigo-600 text-white shadow">
+                    1. Warm-up
+                </button>
+                <button onclick="switchStage('grammar')" id="btn-grammar" class="px-3 py-1.5 text-xs font-semibold rounded-xl transition-all text-slate-600 hover:text-indigo-600">
+                    2. Grammar
+                </button>
+                <button onclick="switchStage('formative')" id="btn-formative" class="px-3 py-1.5 text-xs font-semibold rounded-xl transition-all text-slate-600 hover:text-indigo-600">
+                    3. Formative
+                </button>
+                <button onclick="switchStage('summative')" id="btn-summative" class="px-3 py-1.5 text-xs font-semibold rounded-xl transition-all text-slate-600 hover:text-indigo-600">
+                    4. Summative Test
+                </button>
+            </div>
+
+            <!-- Score badge -->
+            <div class="flex items-center gap-2 bg-amber-100 border border-amber-300 text-amber-800 px-3.5 py-1.5 rounded-2xl font-bold text-sm shadow-sm">
+                <i class="fa-solid fa-star text-amber-500 animate-spin"></i>
+                <span>Score: <span id="total-score">0</span> pts</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-5xl w-full mx-auto p-4 sm:p-6 my-auto">
+
+        <!-- ================= STAGE 1: WARM-UP (VOCABULARY MATCH) ================= -->
+        <section id="stage-warmup" class="bg-white rounded-3xl shadow-2xl p-6 sm:p-8 transition-all">
+            <div class="flex items-center justify-between border-b pb-4 mb-6">
+                <div>
+                    <span class="bg-sky-100 text-sky-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Starting the Lesson</span>
+                    <h2 class="text-xl sm:text-2xl font-bold text-slate-800 mt-1">Activity 1: Entertainment Places Match</h2>
+                </div>
+                <div class="text-indigo-600 font-semibold text-xs sm:text-sm bg-indigo-50 px-3 py-1.5 rounded-xl">
+                    <i class="fa-solid fa-puzzle-piece mr-1"></i> Vocabulary
+                </div>
+            </div>
+
+            <p class="text-slate-600 mb-6 text-sm">
+                Drag the entertainment places from the word bank to match the correct descriptions from Unit 5!
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+                <!-- Draggable Words Bank -->
+                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                    <h3 class="font-bold text-xs sm:text-sm text-slate-700 mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-hand-pointer text-indigo-500"></i> Word Bank (Drag these):
+                    </h3>
+                    <div id="warmup-words" class="flex flex-wrap gap-2 min-h-[140px] p-3 bg-white rounded-xl border border-dashed border-slate-300">
+                        <div draggable="true" ondragstart="drag(event)" id="w1" data-word="Aquarium" class="draggable bg-sky-100 text-sky-800 font-semibold px-3 py-2 rounded-xl text-xs sm:text-sm shadow hover:bg-sky-200 transition">
+                            <i class="fa-solid fa-fish mr-1"></i> Aquarium
+                        </div>
+                        <div draggable="true" ondragstart="drag(event)" id="w2" data-word="3D Cinema" class="draggable bg-rose-100 text-rose-800 font-semibold px-3 py-2 rounded-xl text-xs sm:text-sm shadow hover:bg-rose-200 transition">
+                            <i class="fa-solid fa-film mr-1"></i> 3D Cinema
+                        </div>
+                        <div draggable="true" ondragstart="drag(event)" id="w3" data-word="Theme Park" class="draggable bg-amber-100 text-amber-800 font-semibold px-3 py-2 rounded-xl text-xs sm:text-sm shadow hover:bg-amber-200 transition">
+                            <i class="fa-solid fa-ferris-wheel mr-1"></i> Theme Park
+                        </div>
+                        <div draggable="true" ondragstart="drag(event)" id="w4" data-word="Planetarium" class="draggable bg-purple-100 text-purple-800 font-semibold px-3 py-2 rounded-xl text-xs sm:text-sm shadow hover:bg-purple-200 transition">
+                            <i class="fa-solid fa-earth-americas mr-1"></i> Planetarium
+                        </div>
+                        <div draggable="true" ondragstart="drag(event)" id="w5" data-word="Adventure Playground" class="draggable bg-emerald-100 text-emerald-800 font-semibold px-3 py-2 rounded-xl text-xs sm:text-sm shadow hover:bg-emerald-200 transition">
+                            <i class="fa-solid fa-person-hiking mr-1"></i> Adventure Playground
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Drop Targets -->
+                <div class="space-y-3">
+                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 flex justify-between items-center gap-2">
+                        <span class="text-xs sm:text-sm font-medium text-slate-700">1. We're seeing fish and aquatic animals here.</span>
+                        <div ondrop="drop(event, 'Aquarium')" ondragover="allowDrop(event)" ondragleave="removeDragOver(event)" class="dropzone w-36 sm:w-44 h-11 border-2 border-dashed border-indigo-300 bg-white rounded-xl flex items-center justify-center text-xs font-bold text-slate-400 shrink-0">
+                            Drop here
+                        </div>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 flex justify-between items-center gap-2">
+                        <span class="text-xs sm:text-sm font-medium text-slate-700">2. We're watching a film on a big screen.</span>
+                        <div ondrop="drop(event, '3D Cinema')" ondragover="allowDrop(event)" ondragleave="removeDragOver(event)" class="dropzone w-36 sm:w-44 h-11 border-2 border-dashed border-indigo-300 bg-white rounded-xl flex items-center justify-center text-xs font-bold text-slate-400 shrink-0">
+                            Drop here
+                        </div>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 flex justify-between items-center gap-2">
+                        <span class="text-xs sm:text-sm font-medium text-slate-700">3. We're riding fast roller coasters & fun rides.</span>
+                        <div ondrop="drop(event, 'Theme Park')" ondragover="allowDrop(event)" ondragleave="removeDragOver(event)" class="dropzone w-36 sm:w-44 h-11 border-2 border-dashed border-indigo-300 bg-white rounded-xl flex items-center justify-center text-xs font-bold text-slate-400 shrink-0">
+                            Drop here
+                        </div>
+                    </div>
+                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 flex justify-between items-center gap-2">
+                        <span class="text-xs sm:text-sm font-medium text-slate-700">4. We're learning about stars and planets.</span>
+                        <div ondrop="drop(event, 'Planetarium')" ondragover="allowDrop(event)" ondragleave="removeDragOver(event)" class="dropzone w-36 sm:w-44 h-11 border-2 border-dashed border-indigo-300 bg-white rounded-xl flex items-center justify-center text-xs font-bold text-slate-400 shrink-0">
+                            Drop here
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 flex justify-between items-center">
+                <button onclick="switchStage('grammar')" class="text-indigo-600 font-semibold text-sm hover:underline">
+                    Next Stage <i class="fa-solid fa-arrow-right ml-1"></i>
+                </button>
+                <button onclick="checkWarmup()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-2.5 rounded-xl shadow-md transition flex items-center gap-2">
+                    <i class="fa-solid fa-check"></i> Check Answers
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= STAGE 2: GRAMMAR (PRESENT CONTINUOUS RULE) ================= -->
+        <section id="stage-grammar" class="bg-white rounded-3xl shadow-2xl p-6 sm:p-8 transition-all hidden">
+            <div class="flex items-center justify-between border-b pb-4 mb-6">
+                <div>
+                    <span class="bg-indigo-100 text-indigo-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Grammar Focus</span>
+                    <h2 class="text-xl sm:text-2xl font-bold text-slate-800 mt-1">Activity 2: Present Continuous for Future</h2>
+                </div>
+                <div class="text-indigo-600 font-semibold text-xs sm:text-sm bg-indigo-50 px-3 py-1.5 rounded-xl">
+                    <i class="fa-solid fa-clock mr-1"></i> Grammar Rule
+                </div>
+            </div>
+
+            <div class="bg-indigo-50 border border-indigo-200 p-4 rounded-2xl mb-6">
+                <h4 class="font-bold text-indigo-900 text-sm mb-1"><i class="fa-solid fa-lightbulb text-amber-500 mr-1"></i> Rule & Formula:</h4>
+                <p class="text-xs sm:text-sm text-indigo-800 leading-relaxed">
+                    We use the <strong>Present Continuous (am/is/are + verb-ing)</strong> for future arrangements already planned and confirmed (e.g., <i>"We're going to the aquarium tomorrow"</i>).
+                </p>
+            </div>
+
+            <p class="text-slate-600 mb-4 text-sm font-medium">
+                Drag the correct verb forms into the correct arrangement gaps:
+            </p>
+
+            <div class="space-y-4">
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                    <div class="text-xs sm:text-sm font-medium text-slate-700">
+                        1. Tomorrow, we <span ondrop="dropGrammar(event, 'are going')" ondragover="allowDrop(event)" ondragleave="removeDragOver(event)" class="grammar-slot inline-block w-28 h-8 border-2 border-dashed border-indigo-400 bg-white rounded-lg text-center font-bold text-indigo-600 mx-1 align-middle text-xs leading-8">_____</span> home.
+                    </div>
+                    <span class="text-xs text-slate-400">(Hint: plural subject "we")</span>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                    <div class="text-xs sm:text-sm font-medium text-slate-700">
+                        2. On Sunday, she <span ondrop="dropGrammar(event, 'is visiting')" ondragover="allowDrop(event)" ondragleave="removeDragOver(event)" class="grammar-slot inline-block w-28 h-8 border-2 border-dashed border-indigo-400 bg-white rounded-lg text-center font-bold text-indigo-600 mx-1 align-middle text-xs leading-8">_____</span> Al-Qurum Park.
+                    </div>
+                    <span class="text-xs text-slate-400">(Hint: singular subject "she")</span>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                    <div class="text-xs sm:text-sm font-medium text-slate-700">
+                        3. Tonight, we <span ondrop="dropGrammar(event, 'are watching')" ondragover="allowDrop(event)" ondragleave="removeDragOver(event)" class="grammar-slot inline-block w-28 h-8 border-2 border-dashed border-indigo-400 bg-white rounded-lg text-center font-bold text-indigo-600 mx-1 align-middle text-xs leading-8">_____</span> a film.
+                    </div>
+                    <span class="text-xs text-slate-400">(Hint: viewing action)</span>
+                </div>
+            </div>
+
+            <div class="mt-6 bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                <h4 class="font-bold text-xs sm:text-sm text-slate-700 mb-3"><i class="fa-solid fa-list-ul text-indigo-500 mr-1"></i> Verb Options:</h4>
+                <div id="grammar-words" class="flex flex-wrap gap-2.5">
+                    <div draggable="true" ondragstart="drag(event)" id="gw1" data-word="are going" class="draggable bg-indigo-100 text-indigo-800 font-semibold px-3.5 py-2 rounded-xl text-xs sm:text-sm shadow hover:bg-indigo-200 transition">
+                        are going
+                    </div>
+                    <div draggable="true" ondragstart="drag(event)" id="gw2" data-word="is visiting" class="draggable bg-indigo-100 text-indigo-800 font-semibold px-3.5 py-2 rounded-xl text-xs sm:text-sm shadow hover:bg-indigo-200 transition">
+                        is visiting
+                    </div>
+                    <div draggable="true" ondragstart="drag(event)" id="gw3" data-word="are watching" class="draggable bg-indigo-100 text-indigo-800 font-semibold px-3.5 py-2 rounded-xl text-xs sm:text-sm shadow hover:bg-indigo-200 transition">
+                        are watching
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 flex justify-between items-center">
+                <button onclick="switchStage('warmup')" class="text-indigo-600 font-semibold text-sm hover:underline">
+                    <i class="fa-solid fa-arrow-left mr-1"></i> Back
+                </button>
+                <button onclick="checkGrammar()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-2.5 rounded-xl shadow-md transition flex items-center gap-2">
+                    <i class="fa-solid fa-check"></i> Check Grammar
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= STAGE 3: FORMATIVE (SENTENCE BUILDING & MATCHING) ================= -->
+        <section id="stage-formative" class="bg-white rounded-3xl shadow-2xl p-6 sm:p-8 transition-all hidden">
+            <div class="flex items-center justify-between border-b pb-4 mb-6">
+                <div>
+                    <span class="bg-emerald-100 text-emerald-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Formative Activity</span>
+                    <h2 class="text-xl sm:text-2xl font-bold text-slate-800 mt-1">Activity 3: Dialogue & Future Arrangements</h2>
+                </div>
+                <div class="text-emerald-600 font-semibold text-xs sm:text-sm bg-emerald-50 px-3 py-1.5 rounded-xl">
+                    <i class="fa-solid fa-comments mr-1"></i> Interactive Practice
+                </div>
+            </div>
+
+            <p class="text-slate-600 mb-6 text-sm">
+                Match each question or sentence with the correct future response based on Unit 5 listening dialogue:
+            </p>
+
+            <div class="space-y-4">
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                    <span class="text-xs sm:text-sm font-medium text-slate-700">1. Where are you going next week?</span>
+                    <select id="formative-q1" class="border border-slate-300 rounded-xl px-3 py-2 text-xs sm:text-sm bg-white font-medium text-indigo-700 focus:outline-none focus:border-indigo-500">
+                        <option value="">-- Select response --</option>
+                        <option value="aquarium">We're going to the aquarium.</option>
+                        <option value="school">It's a school day.</option>
+                    </select>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                    <span class="text-xs sm:text-sm font-medium text-slate-700">2. What are you doing tonight?</span>
+                    <select id="formative-q2" class="border border-slate-300 rounded-xl px-3 py-2 text-xs sm:text-sm bg-white font-medium text-indigo-700 focus:outline-none focus:border-indigo-500">
+                        <option value="">-- Select response --</option>
+                        <option value="film">We're watching a film under the sea.</option>
+                        <option value="ride">We're riding horses.</option>
+                    </select>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                    <span class="text-xs sm:text-sm font-medium text-slate-700">3. When are you visiting the planetarium?</span>
+                    <select id="formative-q3" class="border border-slate-300 rounded-xl px-3 py-2 text-xs sm:text-sm bg-white font-medium text-indigo-700 focus:outline-none focus:border-indigo-500">
+                        <option value="">-- Select response --</option>
+                        <option value="monday">Next Monday, it's a special day.</option>
+                        <option value="yesterday">Yesterday morning.</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="mt-8 flex justify-between items-center">
+                <button onclick="switchStage('grammar')" class="text-indigo-600 font-semibold text-sm hover:underline">
+                    <i class="fa-solid fa-arrow-left mr-1"></i> Back
+                </button>
+                <button onclick="checkFormative()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-6 py-2.5 rounded-xl shadow-md transition flex items-center gap-2">
+                    <i class="fa-solid fa-check"></i> Check Formative
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= STAGE 4: SUMMATIVE TEST (BASED ON WORKSHEET) ================= -->
+        <section id="stage-summative" class="bg-white rounded-3xl shadow-2xl p-6 sm:p-8 transition-all hidden">
+            <div class="flex items-center justify-between border-b pb-4 mb-6">
+                <div>
+                    <span class="bg-purple-100 text-purple-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Summative Test</span>
+                    <h2 class="text-xl sm:text-2xl font-bold text-slate-800 mt-1">Activity 4: Talent Show & Entertainment Quiz</h2>
+                </div>
+                <div class="text-purple-600 font-semibold text-xs sm:text-sm bg-purple-50 px-3 py-1.5 rounded-xl">
+                    <i class="fa-solid fa-medal mr-1"></i> Final Assessment
+                </div>
+            </div>
+
+            <p class="text-slate-600 mb-6 text-xs sm:text-sm">
+                Based on Omani Grade 7 worksheet model (Grammar / Vocabulary 05), choose the correct word for each item:
+            </p>
+
+            <div class="space-y-6">
+                <!-- Question 1 -->
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <p class="font-semibold text-xs sm:text-sm text-slate-800 mb-3">
+                        1. A (1) <span class="bg-indigo-100 px-2 py-0.5 rounded text-indigo-700">_____</span> stood on stage and introduced the acts.
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <label class="flex items-center gap-2 p-2.5 bg-white rounded-lg border cursor-pointer hover:border-indigo-500 transition">
+                            <input type="radio" name="q1" value="house"> <span class="text-xs sm:text-sm">house</span>
+                        </label>
+                        <label class="flex items-center gap-2 p-2.5 bg-white rounded-lg border cursor-pointer hover:border-indigo-500 transition">
+                            <input type="radio" name="q1" value="guitar"> <span class="text-xs sm:text-sm">guitar</span>
+                        </label>
+                        <label class="flex items-center gap-2 p-2.5 bg-white rounded-lg border cursor-pointer hover:border-indigo-500 transition">
+                            <input type="radio" name="q1" value="presenter"> <span class="text-xs sm:text-sm font-bold text-indigo-700">presenter</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <p class="font-semibold text-xs sm:text-sm text-slate-800 mb-3">
+                        2. Then, a young (2) <span class="bg-indigo-100 px-2 py-0.5 rounded text-indigo-700">_____</span> came on stage and sang a song.
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <label class="flex items-center gap-2 p-2.5 bg-white rounded-lg border cursor-pointer hover:border-indigo-500 transition">
+                            <input type="radio" name="q2" value="performer"> <span class="text-xs sm:text-sm font-bold text-indigo-700">performer</span>
+                        </label>
+                        <label class="flex items-center gap-2 p-2.5 bg-white rounded-lg border cursor-pointer hover:border-indigo-500 transition">
+                            <input type="radio" name="q2" value="cinema"> <span class="text-xs sm:text-sm">cinema</span>
+                        </label>
+                        <label class="flex items-center gap-2 p-2.5 bg-white rounded-lg border cursor-pointer hover:border-indigo-500 transition">
+                            <input type="radio" name="q2" value="holiday"> <span class="text-xs sm:text-sm">holiday</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <p class="font-semibold text-xs sm:text-sm text-slate-800 mb-3">
+                        3. After that, a (3) <span class="bg-indigo-100 px-2 py-0.5 rounded text-indigo-700">_____</span> told funny jokes and made us laugh.
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <label class="flex items-center gap-2 p-2.5 bg-white rounded-lg border cursor-pointer hover:border-indigo-500 transition">
+                            <input type="radio" name="q3" value="dancer"> <span class="text-xs sm:text-sm">dancer</span>
+                        </label>
+                        <label class="flex items-center gap-2 p-2.5 bg-white rounded-lg border cursor-pointer hover:border-indigo-500 transition">
+                            <input type="radio" name="q3" value="comedian"> <span class="text-xs sm:text-sm font-bold text-indigo-700">comedian</span>
+                        </label>
+                        <label class="flex items-center gap-2 p-2.5 bg-white rounded-lg border cursor-pointer hover:border-indigo-500 transition">
+                            <input type="radio" name="q3" value="singer"> <span class="text-xs sm:text-sm">singer</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <p class="font-semibold text-xs sm:text-sm text-slate-800 mb-3">
+                        4. The next act was a (4) <span class="bg-indigo-100 px-2 py-0.5 rounded text-indigo-700">_____</span> with a red nose and big shoes.
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <label class="flex items-center gap-2 p-2.5 bg-white rounded-lg border cursor-pointer hover:border-indigo-500 transition">
+                            <input type="radio" name="q4" value="lunch"> <span class="text-xs sm:text-sm">lunch</span>
+                        </label>
+                        <label class="flex items-center gap-2 p-2.5 bg-white rounded-lg border cursor-pointer hover:border-indigo-500 transition">
+                            <input type="radio" name="q4" value="driver"> <span class="text-xs sm:text-sm">driver</span>
+                        </label>
+                        <label class="flex items-center gap-2 p-2.5 bg-white rounded-lg border cursor-pointer hover:border-indigo-500 transition">
+                            <input type="radio" name="q4" value="clown"> <span class="text-xs sm:text-sm font-bold text-indigo-700">clown</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 flex justify-between items-center">
+                <button onclick="switchStage('formative')" class="text-indigo-600 font-semibold text-sm hover:underline">
+                    <i class="fa-solid fa-arrow-left mr-1"></i> Back
+                </button>
+                <button onclick="checkSummative()" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-6 py-2.5 rounded-xl shadow-md transition flex items-center gap-2">
+                    <i class="fa-solid fa-flag-checkered"></i> Submit Final Test
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 text-center shadow-2xl animate-bounce-slow">
+            <div id="modal-icon" class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
+                <i class="fa-solid fa-award"></i>
+            </div>
+            <h3 id="modal-title" class="font-bold text-xl text-slate-800 mb-2">Great Job!</h3>
+            <p id="modal-text" class="text-slate-600 text-sm mb-6">You answered correctly and earned bonus points!</p>
+            <button onclick="closeModal()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 rounded-xl transition shadow">
+                Continue Learning
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let score = 0;
+
+        function updateScore(points) {
+            score += points;
+            document.getElementById('total-score').innerText = score;
+        }
+
+        function switchStage(stageId) {
+            document.getElementById('stage-warmup').classList.add('hidden');
+            document.getElementById('stage-grammar').classList.add('hidden');
+            document.getElementById('stage-formative').classList.add('hidden');
+            document.getElementById('stage-summative').classList.add('hidden');
+
+            document.getElementById('btn-warmup').className = "px-3 py-1.5 text-xs font-semibold rounded-xl transition-all text-slate-600 hover:text-indigo-600";
+            document.getElementById('btn-grammar').className = "px-3 py-1.5 text-xs font-semibold rounded-xl transition-all text-slate-600 hover:text-indigo-600";
+            document.getElementById('btn-formative').className = "px-3 py-1.5 text-xs font-semibold rounded-xl transition-all text-slate-600 hover:text-indigo-600";
+            document.getElementById('btn-summative').className = "px-3 py-1.5 text-xs font-semibold rounded-xl transition-all text-slate-600 hover:text-indigo-600";
+
+            document.getElementById('stage-' + stageId).classList.remove('hidden');
+            document.getElementById('btn-' + stageId).className = "px-3 py-1.5 text-xs font-semibold rounded-xl transition-all bg-indigo-600 text-white shadow";
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Drag and Drop handlers
+        function allowDrop(ev) {
+            ev.preventDefault();
+            ev.currentTarget.classList.add('drag-over');
+        }
+
+        function removeDragOver(ev) {
+            ev.currentTarget.classList.remove('drag-over');
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+            ev.dataTransfer.setData("word", ev.target.getAttribute("data-word"));
+        }
+
+        function drop(ev, expectedWord) {
+            ev.preventDefault();
+            ev.currentTarget.classList.remove('drag-over');
+            var dataId = ev.dataTransfer.getData("text");
+            var droppedWord = ev.dataTransfer.getData("word");
+            var draggedElement = document.getElementById(dataId);
+
+            ev.currentTarget.innerHTML = "";
+            ev.currentTarget.appendChild(draggedElement);
+            draggedElement.setAttribute('data-matched', droppedWord);
+        }
+
+        function dropGrammar(ev, expectedWord) {
+            ev.preventDefault();
+            ev.currentTarget.classList.remove('drag-over');
+            var dataId = ev.dataTransfer.getData("text");
+            var droppedWord = ev.dataTransfer.getData("word");
+
+            ev.currentTarget.innerHTML = droppedWord;
+            ev.currentTarget.setAttribute('data-dropped', droppedWord);
+        }
+
+        function checkWarmup() {
+            let correctCount = 0;
+            const dropzones = document.querySelectorAll('#stage-warmup .dropzone');
+            dropzones.forEach(dz => {
+                const child = dz.firstElementChild;
+                const expected = dz.getAttribute('ondrop').match(/'([^']+)'/)[1];
+                if (child && child.getAttribute('data-word') === expected) {
+                    correctCount++;
+                    dz.classList.add('border-emerald-500', 'bg-emerald-50');
+                } else {
+                    dz.classList.add('border-rose-500', 'bg-rose-50');
+                }
+            });
+
+            if (correctCount === 4) {
+                updateScore(25);
+                showModal("Fantastic!", "You matched all entertainment places correctly! +25 points.", "success");
+            } else {
+                showModal("Keep Trying!", "Some matches were incorrect. Check the highlighted borders and try again.", "warning");
+            }
+        }
+
+        function checkGrammar() {
+            let correctCount = 0;
+            const slots = document.querySelectorAll('.grammar-slot');
+            const expectedAnswers = ['are going', 'is visiting', 'are watching'];
+
+            slots.forEach((slot, index) => {
+                const dropped = slot.getAttribute('data-dropped');
+                if (dropped === expectedAnswers[index]) {
+                    correctCount++;
+                    slot.classList.add('border-emerald-500', 'bg-emerald-50', 'text-emerald-700');
+                } else {
+                    slot.classList.add('border-rose-500', 'bg-rose-50');
+                }
+            });
+
+            if (correctCount === 3) {
+                updateScore(30);
+                showModal("Grammar Master!", "Great job using Present Continuous for future arrangements! +30 points.", "success");
+            } else {
+                showModal("Almost There!", "Review subject-verb agreement (am/is/are + verb-ing) and try again.", "warning");
+            }
+        }
+
+        function checkFormative() {
+            let correctCount = 0;
+            const q1 = document.getElementById('formative-q1').value;
+            const q2 = document.getElementById('formative-q2').value;
+            const q3 = document.getElementById('formative-q3').value;
+
+            if (q1 === 'aquarium') correctCount++;
+            if (q2 === 'film') correctCount++;
+            if (q3 === 'monday') correctCount++;
+
+            if (correctCount === 3) {
+                updateScore(25);
+                showModal("Excellent!", "All dialogue answers are correct! +25 points.", "success");
+            } else {
+                showModal("Good Effort!", `You got ${correctCount} out of 3 correct. Review and try again.`, "warning");
+            }
+        }
+
+        function checkSummative() {
+            let correctCount = 0;
+            const q1 = document.querySelector('input[name="q1"]:checked');
+            const q2 = document.querySelector('input[name="q2"]:checked');
+            const q3 = document.querySelector('input[name="q3"]:checked');
+            const q4 = document.querySelector('input[name="q4"]:checked');
+
+            if (q1 && q1.value === 'presenter') correctCount++;
+            if (q2 && q2.value === 'performer') correctCount++;
+            if (q3 && q3.value === 'comedian') correctCount++;
+            if (q4 && q4.value === 'clown') correctCount++;
+
+            if (correctCount === 4) {
+                updateScore(50);
+                showModal("Outstanding!", "You passed the Summative Test with full score! +50 points.", "success");
+            } else {
+                showModal("Good Effort!", `You got ${correctCount} out of 4 correct. Review worksheet vocabulary and try again.`, "warning");
+            }
+        }
+
+        function showModal(title, text, type) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-text').innerText = text;
+            const iconDiv = document.getElementById('modal-icon');
+            if (type === 'success') {
+                iconDiv.className = "w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-4";
+                iconDiv.innerHTML = '<i class="fa-solid fa-award"></i>';
+            } else {
+                iconDiv.className = "w-16 h-16 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-4";
+                iconDiv.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
+            }
+            document.getElementById('modal').classList.remove('hidden');
+            document.getElementById('modal').classList.add('flex');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('flex');
+            document.getElementById('modal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
